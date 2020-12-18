@@ -1,0 +1,67 @@
+#main {
+    text-align: center;
+}
+
+#title {
+    font-size: 60px;
+    color: #b83f45;
+}
+
+#todo {
+    text-align: center;
+    display: inline-block;
+    width: 550px;
+}
+
+#input {
+    width: 100%;
+    height: 65px;
+    margin: 0;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.todo-text {
+    width: 400px;
+    margin: 0;
+    padding: 16px 16px 16px 60px;
+    border: none;
+    text-align: start;
+    font-size: 24px;
+}
+
+#input-checkbox {
+    content: '❯';
+    font-size: 22px;
+    padding: 10px 27px 10px 27px;
+}
+
+#todo-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.todo-item {
+    width: 100%;
+    height: 65px;
+    display: block;
+    margin: 0;
+    text-align: center;
+    border: 1px solid black;
+}
+
+.state-select {
+    width: 100%;
+    height: 50px;
+    border: 1px solid black;
+}
+
+.completed {
+    color: gray;
+    text-decoration: line-through;
+}
+
+#new-todo {
+    outline: none;
+}
