@@ -1,2 +1,2 @@
 # todo-list
-## tony OJT
+- tony OJT
