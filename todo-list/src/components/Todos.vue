@@ -10,7 +10,7 @@
               align="center">
             </v-checkbox>
             <!-- 여기서 한글을 입력받고 keydown.enter 이벤트를 발생시켰을 때  -->
-            <!-- 입력이 2번들어가게 되는 이슈가 있었다. 그래서 keypress로 바꾸었더니 해결되었다.  -->
+            <!-- 입력이 2번들어가게 되는 이슈가 있었다. 그래서 keypress로 바꾸었더니 해결되었다. -->
             <v-text-field
               v-model="addNewText"
               placeholder="What needs to be done?"

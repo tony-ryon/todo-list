@@ -42,6 +42,7 @@
 </template>
 
 <script>
+
     export default {
         name: "Content",
         props: ['todo'],
