@@ -29,7 +29,6 @@
 </template>
 
 <script>
-
     var filters = {
         all: function (todos) {
             return todos;

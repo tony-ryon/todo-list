@@ -45,6 +45,7 @@
 </template>
 
 <script>
+
     import Content from '@/components/Content.vue';
     import Footer from '@/components/Footer';
 
