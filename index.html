@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo-List</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+<div id="main">
+    <header>
+        <h1 id="title">
+            todos
+        </h1>
+    </header>
+    <div id="todo">
+        <div id="input">
+            <form @submit.prevent="addNewTodo">
+                <input
+                    id="input-checkbox"
+                    type="checkbox"
+                    v-model="checked"
+                    v-show="allDoneShow">
+                <input
+                    class="todo-text"
+                    type="text"
+                    id="new-todo"
+                    placeholder="What needs to be done?"
+                    autocomplete="off"
+                    v-model="addNewText"
+                    maxlength="30">
+            </form>
+        </div>
+        <ul id="todo-items">
+            <todo-item
+                v-for="(todo, index) in filteredTodos"
+                :todo="todo"
+                :key="todo.id"
+                @remove="todos.splice(index, 1)">
+            </todo-item>
+        </ul>
+        <div v-if="todos.length !== 0" class="state-select">
+            <span>items: {{todos.length}}</span>
+            <a href="#/all" @click="changeVisibility('all')">All</a>
+            <a href="#/active" @click="changeVisibility('active')">Active</a>
+            <a href="#/completed" @click="changeVisibility('completed')">Completed</a>
+            <button
+                class="clear-completed"
+                v-show="clearCompletedShow"
+                @click="clearCompletedTodos">
+                Clear completed
+            </button>
+        </div>
+    </div>
+</div>
+<script src="index.js"></script>
+</body>
+</html>
