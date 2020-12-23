@@ -45,102 +45,102 @@
 </template>
 
 <script>
-import Content from '@/components/Content.vue';
-import Footer from '@/components/Footer';
+    import Content from '@/components/Content.vue';
+    import Footer from '@/components/Footer';
 
-var STORAGE_KEY = 'todos'
+    var STORAGE_KEY = 'todos'
 
-var filters = {
-    all: function (todos) {
-        return todos;
-    },
-    active: function (todos) {
-        return todos.filter(function (todo) {
-            return !todo.checked;
-        });
-    },
-    completed: function (todos) {
-        return todos.filter(function (todo) {
-            return todo.checked;
-        });
-    }
-}
-
-var todoStorage = {
-    save: function (todos) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-    },
-    fetch: function () {
-        var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
-        // todos의 id 순서를 다시 맞추기 위한것
-        todos.forEach(function (todo, index) {
-            todo.id = index;
-        })
-
-        return todos;
-    }
-}
-
-export default {
-    name: "Todos",
-    components: {
-        Content, Footer
-    },
-    data: () => ({
-        addNewText: '',
-        todos: todoStorage.fetch(),
-        nextId: todoStorage.fetch().length,
-        completedTodos: filters.completed(todoStorage.fetch()).length,
-        allChecked: localStorage.getItem('allChecked') === 'true' || false,
-        visibility: localStorage.getItem('visibility') || 'all',
-        changeLabel: false
-    }),
-    methods: {
-        addNewTodo () {
-            if (this.todos.length === 0) {
-                this.nextId = 0;
-                this.allChecked = false;
-            }
-
-            var value = this.addNewText && this.addNewText.trim()
-            if (!value) {
-                return;
-            }
-
-            this.todos.push({
-                id: this.nextId++,
-                text: this.addNewText,
-                checked: false
-            })
-            this.addNewText = '';
+    var filters = {
+        all: function (todos) {
+            return todos;
         },
-        changeVisibility (visibility) {
-            this.visibility = visibility;
-            localStorage.setItem('visibility', visibility);
+        active: function (todos) {
+            return todos.filter(function (todo) {
+                return !todo.checked;
+            });
         },
-        clearCompletedTodos () {
-            this.todos = filters.active(this.todos);
+        completed: function (todos) {
+            return todos.filter(function (todo) {
+                return todo.checked;
+            });
         }
-    },
-    computed: {
-        filteredTodos: function () {
-            return filters[this.visibility](this.todos);
-        }
-    },
-    watch: {
-        allChecked: function (completed) {
-            this.todos.forEach(function (todo) {
-                todo.checked = completed;
-            })
-            localStorage.setItem('allChecked', completed);
+    }
+
+    var todoStorage = {
+        save: function (todos) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
         },
-        todos: {
-            handler: function (updateTodo) {
-                todoStorage.save(updateTodo);
-                this.completedTodos = filters.completed(this.todos).length;
+        fetch: function () {
+            var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+            // todos의 id 순서를 다시 맞추기 위한것
+            todos.forEach(function (todo, index) {
+                todo.id = index;
+            })
+
+            return todos;
+        }
+    }
+
+    export default {
+        name: "Todos",
+        components: {
+            Content, Footer
+        },
+        data: () => ({
+            addNewText: '',
+            todos: todoStorage.fetch(),
+            nextId: todoStorage.fetch().length,
+            completedTodos: filters.completed(todoStorage.fetch()).length,
+            allChecked: localStorage.getItem('allChecked') === 'true' || false,
+            visibility: localStorage.getItem('visibility') || 'all',
+            changeLabel: false
+        }),
+        methods: {
+            addNewTodo () {
+                if (this.todos.length === 0) {
+                    this.nextId = 0;
+                    this.allChecked = false;
+                }
+
+                var value = this.addNewText && this.addNewText.trim()
+                if (!value) {
+                    return;
+                }
+
+                this.todos.push({
+                    id: this.nextId++,
+                    text: this.addNewText,
+                    checked: false
+                })
+                this.addNewText = '';
             },
-            deep: true
+            changeVisibility (visibility) {
+                this.visibility = visibility;
+                localStorage.setItem('visibility', visibility);
+            },
+            clearCompletedTodos () {
+                this.todos = filters.active(this.todos);
+            }
+        },
+        computed: {
+            filteredTodos: function () {
+                return filters[this.visibility](this.todos);
+            }
+        },
+        watch: {
+            allChecked: function (completed) {
+                this.todos.forEach(function (todo) {
+                    todo.checked = completed;
+                })
+                localStorage.setItem('allChecked', completed);
+            },
+            todos: {
+                handler: function (updateTodo) {
+                    todoStorage.save(updateTodo);
+                    this.completedTodos = filters.completed(this.todos).length;
+                },
+                deep: true
+            }
         }
     }
-}
 </script>
