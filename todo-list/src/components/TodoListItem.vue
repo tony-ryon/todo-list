@@ -42,10 +42,13 @@
 </template>
 
 <script>
-
     export default {
-        name: "Content",
-        props: ['todo'],
+        name: "TodoListItem",
+        props: {
+          todo: {
+            type: Object
+          }
+        },
         data: () => ({
             changeLabel: false,
             updateText: ''
@@ -55,12 +58,12 @@
                 this.changeLabel = true;
             },
             updateTodo (todo) {
-                var value = this.updateText && this.updateText.trim()
+                let value = this.updateText && this.updateText.trim()
                 if (!value) {
                     return;
                 }
 
-                todo.text = this.updateText
+                todo.text = value;
                 this.changeLabel = false;
             }
         }

@@ -25,7 +25,7 @@
         <!-- todo 생성부분 -->
         <v-card v-if="todos.length > 0">
             <v-slide-y-transition group>
-                  <Content
+                  <TodoListItem
                     v-for="(todo, index) in filteredTodos"
                     :todo="todo"
                     :key="index"
@@ -35,7 +35,7 @@
         </v-card>
 
         <!-- footer 부분 -->
-        <Footer
+        <TodoListFooter
             :todos="todos"
             :completedTodos="completedTodos"
             @changeVisibility="changeVisibility"
@@ -45,13 +45,12 @@
 </template>
 
 <script>
+    import TodoListItem from '@/components/TodoListItem.vue';
+    import TodoListFooter from '@/components/TodoListFooter';
 
-    import Content from '@/components/Content.vue';
-    import Footer from '@/components/Footer';
+    const STORAGE_KEY = 'todos'
 
-    var STORAGE_KEY = 'todos'
-
-    var filters = {
+    const filters = {
         all: function (todos) {
             return todos;
         },
@@ -67,12 +66,12 @@
         }
     }
 
-    var todoStorage = {
+    const todoStorage = {
         save: function (todos) {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
         },
         fetch: function () {
-            var todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
+            let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
             // todos의 id 순서를 다시 맞추기 위한것
             todos.forEach(function (todo, index) {
                 todo.id = index;
@@ -83,9 +82,9 @@
     }
 
     export default {
-        name: "Todos",
+        name: "TodoList",
         components: {
-            Content, Footer
+            TodoListItem , TodoListFooter
         },
         data: () => ({
             addNewText: '',
@@ -103,7 +102,7 @@
                     this.allChecked = false;
                 }
 
-                var value = this.addNewText && this.addNewText.trim()
+                let value = this.addNewText && this.addNewText.trim()
                 if (!value) {
                     return;
                 }

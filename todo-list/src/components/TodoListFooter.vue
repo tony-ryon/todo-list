@@ -46,8 +46,15 @@
     }
 
     export default {
-        name: "Footer",
-        props: ['todos', 'completedTodos'],
+        name: "TodoListFooter",
+        props: {
+          todos: {
+            type: Array
+          },
+          completedTodos: {
+            type: Number
+          }
+        },
         methods: {
             clearCompletedShow: function (todos) {
                 return todos.length > filters.active(todos).length;
