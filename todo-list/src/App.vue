@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Todos from './components/Todos.vue';
+import Todos from './components/TodoList.vue';
 
 export default {
   name: 'App',

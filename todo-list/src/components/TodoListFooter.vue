@@ -29,30 +29,37 @@
 </template>
 
 <script>
-
-var filters = {
-    all: function (todos) {
-        return todos;
-    },
-    active: function (todos) {
-        return todos.filter(function (todo) {
-            return !todo.checked;
-        });
-    },
-    completed: function (todos) {
-        return todos.filter(function (todo) {
-            return todo.checked;
-        });
-    }
-}
-
-export default {
-    name: "Footer",
-    props: ['todos', 'completedTodos'],
-    methods: {
-        clearCompletedShow: function (todos) {
-            return todos.length > filters.active(todos).length;
+    var filters = {
+        all: function (todos) {
+            return todos;
+        },
+        active: function (todos) {
+            return todos.filter(function (todo) {
+                return !todo.checked;
+            });
+        },
+        completed: function (todos) {
+            return todos.filter(function (todo) {
+                return todo.checked;
+            });
         }
     }
-}
+
+    export default {
+        name: "TodoListFooter",
+        props: {
+          todos: {
+            type: Array
+          },
+          completedTodos: {
+            type: Number
+          }
+        },
+        methods: {
+            clearCompletedShow: function (todos) {
+                return todos.length > filters.active(todos).length;
+            }
+        }
+    }
+
 </script>

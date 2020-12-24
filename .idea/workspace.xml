@@ -2,14 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c021ea7e-7a19-4210-ba5d-81a878d801e7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/todo-list/src/components/Todos.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list(vuetify)" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todo-list/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todo-list/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/todo-list/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-list/src/components/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoListItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-list/src/components/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoListFooter.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-list/src/components/Todos.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoList.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,6 +38,8 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -50,10 +52,28 @@
       <updated>1608515679939</updated>
       <workItem from="1608515682967" duration="15216000" />
       <workItem from="1608598912118" duration="1839000" />
+      <workItem from="1608716281773" duration="85000" />
+      <workItem from="1608789980077" duration="1602000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/todo-list" />
+    </ignored-roots>
   </component>
 </project>
