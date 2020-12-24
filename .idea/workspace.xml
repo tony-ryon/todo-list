@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c021ea7e-7a19-4210-ba5d-81a878d801e7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/src/components/Content.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoListItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/src/components/Footer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoListFooter.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/todo-list/src/components/Todos.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-list/src/components/TodoList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-list/src/components/TodoListFooter.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-list/src/components/TodoListFooter.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +48,7 @@
       <workItem from="1608515682967" duration="15216000" />
       <workItem from="1608598912118" duration="1839000" />
       <workItem from="1608716281773" duration="85000" />
-      <workItem from="1608789980077" duration="1602000" />
+      <workItem from="1608789980077" duration="4651000" />
     </task>
     <servers />
   </component>

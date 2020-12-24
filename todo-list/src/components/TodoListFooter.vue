@@ -34,14 +34,10 @@
             return todos;
         },
         active: function (todos) {
-            return todos.filter(function (todo) {
-                return !todo.checked;
-            });
+            return todos.filter(todo => !todo.checked);
         },
         completed: function (todos) {
-            return todos.filter(function (todo) {
-                return todo.checked;
-            });
+            return todos.filter(todo => todo.checked);
         }
     }
 

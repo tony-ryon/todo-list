@@ -29,7 +29,7 @@
                     v-for="(todo, index) in filteredTodos"
                     :todo="todo"
                     :key="index"
-                    @remove="todos.splice(index, 1)"
+                    @remove="todos = [...todos.slice(0,index), ...todos.slice(index+1)]"
                     />
             </v-slide-y-transition>
         </v-card>
@@ -55,14 +55,10 @@
             return todos;
         },
         active: function (todos) {
-            return todos.filter(function (todo) {
-                return !todo.checked;
-            });
+            return todos.filter(todo => !todo.checked);
         },
         completed: function (todos) {
-            return todos.filter(function (todo) {
-                return todo.checked;
-            });
+            return todos.filter(todo => todo.checked);
         }
     }
 
@@ -107,11 +103,14 @@
                     return;
                 }
 
-                this.todos.push({
+                let todo = {
                     id: this.nextId++,
                     text: this.addNewText,
                     checked: false
-                })
+                };
+                // ...this.todos를 통해서 immutable하게 바꿀 수 있다.
+                this.todos = [...this.todos, todo];
+
                 this.addNewText = '';
             },
             changeVisibility (visibility) {
