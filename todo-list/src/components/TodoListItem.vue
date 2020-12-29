@@ -64,24 +64,14 @@
                 this.changeLabel = true;
             },
             updateTodo () {
-                let todo = {};
-                todo['id'] = this.todo.id;
-                todo['text'] = this.updateText;
-                todo['checked'] = this.todo.checked;
-
-                this.$emit('update-todo', todo);
+                this.$emit('update-todo', {...this.todo, text: this.updateText});
 
                 this.changeLabel = false;
             }
         },
         watch: {
             'todo.checked': function (changeChecked) {
-                let todo = {};
-                todo['id'] = this.todo.id;
-                todo['text'] = this.todo.text;
-                todo['checked'] = changeChecked;
-
-                this.$emit('update-todo', todo);
+                this.$emit('update-todo', {...this.todo, checked: changeChecked});
             }
         }
     }
