@@ -10,18 +10,18 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn href="#/all" @click="$emit('changeVisibility', 'all')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
+            <v-btn href="#/all" @click="$emit('change-visibility', 'all')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
                 All
             </v-btn>
-            <v-btn href="#/active" @click="$emit('changeVisibility', 'active')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
+            <v-btn href="#/active" @click="$emit('change-visibility', 'active')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
                 Active
             </v-btn>
-            <v-btn href="#/completed" @click="$emit('changeVisibility', 'completed')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
+            <v-btn href="#/completed" @click="$emit('change-visibility', 'completed')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
                 Completed
             </v-btn>
 
             <v-spacer></v-spacer>
-            <v-btn v-show="clearCompletedShow(todos)" @click="$emit('clearCompletedTodos')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
+            <v-btn v-show="clearCompletedShow" @click="$emit('clear-completed-todos')" color="white" rounded text class="my-1" style="font-size: 0.75rem">
                 Clear completed
             </v-btn>
         </v-row>
@@ -29,18 +29,6 @@
 </template>
 
 <script>
-    var filters = {
-        all: function (todos) {
-            return todos;
-        },
-        active: function (todos) {
-            return todos.filter(todo => !todo.checked);
-        },
-        completed: function (todos) {
-            return todos.filter(todo => todo.checked);
-        }
-    }
-
     export default {
         name: "TodoListFooter",
         props: {
@@ -51,11 +39,10 @@
             type: Number
           }
         },
-        methods: {
-            clearCompletedShow: function (todos) {
-                return todos.length > filters.active(todos).length;
+        computed: {
+            clearCompletedShow: function () {
+                return this.todos.length > this.todos.filter(todo => !todo.checked).length;
             }
         }
     }
-
 </script>

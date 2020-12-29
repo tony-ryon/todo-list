@@ -22,9 +22,9 @@
                         autocomplete="off"
                         maxlength="30"
                         color="success"
-                        v-model="updateText"
+                        v-model.trim="updateText"
                         style="display: inline"
-                        @keypress.enter="updateTodo(todo)"
+                        @keypress.enter="updateTodo"
                     />
                 </v-row>
             </v-list-item-action>
@@ -45,9 +45,15 @@
     export default {
         name: "TodoListItem",
         props: {
-          todo: {
-            type: Object
-          }
+            todo: {
+                type: Object,
+                id: Number,
+                text: String,
+                checked: Boolean
+            },
+            todos: {
+                type: Array
+            }
         },
         data: () => ({
             changeLabel: false,
@@ -57,14 +63,25 @@
             changeTodoText () {
                 this.changeLabel = true;
             },
-            updateTodo (todo) {
-                let value = this.updateText && this.updateText.trim()
-                if (!value) {
-                    return;
-                }
+            updateTodo () {
+                let todo = {};
+                todo['id'] = this.todo.id;
+                todo['text'] = this.updateText;
+                todo['checked'] = this.todo.checked;
 
-                todo.text = value;
+                this.$emit('update-todo', todo);
+
                 this.changeLabel = false;
+            }
+        },
+        watch: {
+            'todo.checked': function (changeChecked) {
+                let todo = {};
+                todo['id'] = this.todo.id;
+                todo['text'] = this.todo.text;
+                todo['checked'] = changeChecked;
+
+                this.$emit('update-todo', todo);
             }
         }
     }
