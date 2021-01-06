@@ -12,7 +12,7 @@
             <!-- 여기서 한글을 입력받고 keydown.enter 이벤트를 발생시켰을 때  -->
             <!-- 입력이 2번들어가게 되는 이슈가 있었다. 그래서 keypress로 바꾸었더니 해결되었다. -->
             <v-text-field
-              v-model="addNewText"
+              v-model.trim="addNewText"
               placeholder="What needs to be done?"
               color="success"
               autocomplete="off"
@@ -25,21 +25,23 @@
         <!-- todo 생성부분 -->
         <v-card v-if="todos.length > 0">
             <v-slide-y-transition group>
-                  <TodoListItem
+                  <todo-list-item
                     v-for="(todo, index) in filteredTodos"
                     :todo="todo"
+                    :todos="todos"
                     :key="index"
-                    @remove="todos.splice(index, 1)"
+                    @remove="todos = todos.filter((todo, idx) => idx !== index)"
+                    @update-todo="updateTodo"
                     />
             </v-slide-y-transition>
         </v-card>
 
         <!-- footer 부분 -->
-        <TodoListFooter
+        <todo-list-footer
             :todos="todos"
-            :completedTodos="completedTodos"
-            @changeVisibility="changeVisibility"
-            @clearCompletedTodos="clearCompletedTodos"
+            :completed-todos="completedTodos"
+            @change-visibility="changeVisibility"
+            @clear-completed-todos="clearCompletedTodos"
             />
     </v-container>
 </template>
@@ -48,53 +50,36 @@
     import TodoListItem from '@/components/TodoListItem.vue';
     import TodoListFooter from '@/components/TodoListFooter';
 
-    const STORAGE_KEY = 'todos'
-
-    const filters = {
-        all: function (todos) {
-            return todos;
-        },
-        active: function (todos) {
-            return todos.filter(function (todo) {
-                return !todo.checked;
-            });
-        },
-        completed: function (todos) {
-            return todos.filter(function (todo) {
-                return todo.checked;
-            });
-        }
-    }
-
-    const todoStorage = {
-        save: function (todos) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
-        },
-        fetch: function () {
-            let todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]")
-            // todos의 id 순서를 다시 맞추기 위한것
-            todos.forEach(function (todo, index) {
-                todo.id = index;
-            })
-
-            return todos;
-        }
-    }
-
     export default {
         name: "TodoList",
         components: {
-            TodoListItem , TodoListFooter
+            'todo-list-item': TodoListItem ,
+            'todo-list-footer': TodoListFooter
         },
         data: () => ({
+            STORAGE_KEY: 'todos',
             addNewText: '',
-            todos: todoStorage.fetch(),
-            nextId: todoStorage.fetch().length,
-            completedTodos: filters.completed(todoStorage.fetch()).length,
+            todos: [],
+            nextId: 0,
+            completedTodos: 0,
             allChecked: localStorage.getItem('allChecked') === 'true' || false,
             visibility: localStorage.getItem('visibility') || 'all',
             changeLabel: false
         }),
+        created: function () {
+            let todos = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || "[]");
+            // todos의 id 순서를 다시 맞추기 위한것
+            this.todos= todos.map(function (obj, index) {
+                let todo = {};
+                todo['id'] = index;
+                todo['text'] = obj.text;
+                todo['checked'] = obj.checked;
+
+                return todo;
+            });
+            this.nextId = this.todos.length;
+            this.completedTodos = this.todos.filter(todo => todo.checked).length;
+        },
         methods: {
             addNewTodo () {
                 if (this.todos.length === 0) {
@@ -102,16 +87,18 @@
                     this.allChecked = false;
                 }
 
-                let value = this.addNewText && this.addNewText.trim()
+                const value = this.addNewText
                 if (!value) {
                     return;
                 }
 
-                this.todos.push({
+                let todo = {
                     id: this.nextId++,
                     text: this.addNewText,
                     checked: false
-                })
+                };
+                this.todos = [...this.todos, todo];
+
                 this.addNewText = '';
             },
             changeVisibility (visibility) {
@@ -119,27 +106,43 @@
                 localStorage.setItem('visibility', visibility);
             },
             clearCompletedTodos () {
-                this.todos = filters.active(this.todos);
-            }
+                // this.todos = this.filters.active(this.todos);
+                this.todos = this.todos.filter(todo => !todo.checked);
+            },
+            updateTodo (newTodo) {
+                let index = this.todos.findIndex(function (todo) {
+                    if(todo.id === newTodo.id) return true
+                });
+
+                this.todos = [...this.todos.slice(0, index), newTodo, ...this.todos.slice(index+1)];
+            },
+
         },
         computed: {
             filteredTodos: function () {
-                return filters[this.visibility](this.todos);
+                if (this.visibility === 'all')
+                    return this.todos
+                else if (this.visibility === 'active')
+                    return this.todos.filter(todo => !todo.checked);
+                return this.todos.filter(todo => todo.checked);
             }
         },
         watch: {
             allChecked: function (completed) {
-                this.todos.forEach(function (todo) {
-                    todo.checked = completed;
-                })
+                this.todos = this.todos.map(function (obj) {
+                    let todo = {};
+                    todo['id'] = obj.id;
+                    todo['text'] = obj.text;
+                    todo['checked'] = completed;
+
+                    return todo;
+                });
+
                 localStorage.setItem('allChecked', completed);
             },
-            todos: {
-                handler: function (updateTodo) {
-                    todoStorage.save(updateTodo);
-                    this.completedTodos = filters.completed(this.todos).length;
-                },
-                deep: true
+            todos: function (updateTodos) {
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updateTodos))
+                this.completedTodos = this.todos.filter(todo => todo.checked).length;
             }
         }
     }
