@@ -45,7 +45,14 @@
     "parserOptions": {
       "parser": "@typescript-eslint/parser"
     },
-    "rules": {}
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        2,
+        {
+          "args": "none"
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",

@@ -1,4 +1,4 @@
-App.vue<template>
+<template>
     <v-container style="max-width: 600px">
         <br/><br/>
         <!-- todo 입력부분 -->
@@ -50,76 +50,67 @@ App.vue<template>
 import TodoListItem from '@/components/TodoListItem.vue';
 import TodoListFooter from '@/components/TodoListFooter.vue';
 import {Watch, Component, Vue} from "vue-property-decorator";
+import {ITodo as Todo} from "@/types/type";
+// type에 있는 Todo 인터페이스를 연결하려고 했는데
+// eslint에서 no-unused-vars 에러가 발생했다.
+// @typescript-eslint/no-unused-vars": [2,{"args": "none"}]
+// 위의 코드를 package.json의 rules에 추가해줌으로써 해결
 
-interface Todo{
-    id: number,
-    text: string,
-    checked: boolean
-}
 
 @Component({
     components: {
         TodoListItem,
         TodoListFooter
-    }
+    },
 })
 export default class TodoList extends Vue{
     // data
     private STORAGE_KEY: string =  'todos';
     private addNewText: string = '';
-    private todos: Array<Todo> = [];
+    private todos: Todo[] = [];
     private nextId: number = 0;
-    private completedTodos: number = 0;
     private allChecked: boolean = localStorage.getItem('allChecked') === 'true' || false;
     private visibility: string = localStorage.getItem('visibility') || 'all';
 
     // created
     created() {
-        let todos: Array<Todo> = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || "[]");
+        const todos: Todo[] = JSON.parse(localStorage.getItem(this.STORAGE_KEY) || "[]");
         // todos의 id 순서를 다시 맞추기 위한것
-        this.todos= todos.map(function (obj: Todo, index: number) {
-            let todo = {} as Todo;
-            todo.id = index;
-            todo.text = obj.text;
-            todo.checked = obj.checked;
-
-            return todo;
+        this.todos = todos.map(function (obj: Todo, index: number) {
+            return { ...obj, id: index }
         });
+
         this.nextId = this.todos.length;
-        this.completedTodos = this.todos.filter(todo => todo.checked).length;
     }
 
     // methods
-    addNewTodo () {
+    addNewTodo (): void {
         if (this.todos.length === 0) {
             this.nextId = 0;
             this.allChecked = false;
         }
 
-        const value: string = this.addNewText;
-        if (!value) {
+        if (!this.addNewText) {
             return;
         }
 
-        let todo: Todo = {
+        this.todos = [...this.todos, {
             id: this.nextId++,
             text: this.addNewText,
             checked: false
-        };
-        this.todos = [...this.todos, todo];
+        }];
 
         this.addNewText = '';
     }
-    changeVisibility (visibility: string) {
+    changeVisibility (visibility: string): void {
         this.visibility = visibility;
         localStorage.setItem('visibility', visibility);
     }
-    clearCompletedTodos () {
-        // this.todos = this.filters.active(this.todos);
+    clearCompletedTodos (): void {
         this.todos = this.todos.filter(todo => !todo.checked);
     }
-    updateTodo (newTodo: Todo) {
-        let index: number = this.todos.findIndex(function (todo) {
+    updateTodo (newTodo: Todo): void {
+        const index: number = this.todos.findIndex(function (todo) {
             if(todo.id === newTodo.id) return true
         });
 
@@ -127,30 +118,29 @@ export default class TodoList extends Vue{
     }
 
     // computed
-    get filteredTodos() {
-        if (this.visibility === 'all')
+    get filteredTodos(): Todo[] {
+        if (this.visibility === 'all'){
             return this.todos
-        else if (this.visibility === 'active')
+        }
+        else if (this.visibility === 'active'){
             return this.todos.filter(todo => !todo.checked);
+        }
         return this.todos.filter(todo => todo.checked);
+    }
+    get completedTodos(): number {
+        return this.todos.filter(todo => todo.checked).length;
     }
 
     // watch
     @Watch('allChecked')
-    onAllCheckedChanged(completed: boolean) {
+    onAllCheckedChanged(completed: boolean): void {
         this.todos = this.todos.map(function (obj: Todo) {
-            let todo = {} as Todo;
-            todo['id'] = obj.id;
-            todo['text'] = obj.text;
-            todo['checked'] = completed;
-
-            return todo;
+            return { ...obj, checked: completed }
         })
     }
     @Watch('todos')
-    onTodosChanged(updateTodos: Array<Todo>) {
+    onTodosChanged(updateTodos: Todo[]): void {
         localStorage.setItem(this.STORAGE_KEY, JSON.stringify(updateTodos))
-        this.completedTodos = this.todos.filter(todo => todo.checked).length;
     }
 }
 </script>

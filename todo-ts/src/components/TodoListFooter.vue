@@ -6,7 +6,7 @@
         <v-row
             justify="center"
             no-gutters>
-            <div class="my-3" style="color: white; font-size: 0.9rem; text-align: center">{{todos.length - completedTodos}} items left</div>
+            <div class="my-3" style="color: white; font-size: 0.9rem; text-align: center">{{remainTodosLength}} items left</div>
 
             <v-spacer></v-spacer>
 
@@ -30,22 +30,20 @@
 
 <script lang="ts">
 import {Component, Prop, Vue} from 'vue-property-decorator'
-
-interface Todo{
-    id: number,
-    text: string,
-    checked: boolean
-}
+import {ITodo as Todo} from "@/types/type";
 
 @Component
 export default class TodoListFooter extends Vue{
     // props
-    @Prop(Array) readonly todos!: Array<Todo>
+    @Prop(Array) readonly todos!: Todo[]
     @Prop(Number) readonly completedTodos!: number
 
     // computed
-    get clearCompletedShow() {
+    get clearCompletedShow(): boolean {
         return this.todos.length > this.todos.filter(todo => !todo.checked).length;
+    }
+    get remainTodosLength(): number {
+        return this.todos.length - this.completedTodos;
     }
 }
 </script>

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c021ea7e-7a19-4210-ba5d-81a878d801e7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/todo-ts/src/components/TodoList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/todo-ts/src/components/TodoList.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +50,7 @@
       <workItem from="1608789980077" duration="8628000" />
       <workItem from="1609059567101" duration="30850000" />
       <workItem from="1609920920390" duration="963000" />
-      <workItem from="1609980935674" duration="773000" />
+      <workItem from="1609980935674" duration="1000000" />
     </task>
     <servers />
   </component>

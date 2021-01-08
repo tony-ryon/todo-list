@@ -15,7 +15,7 @@
                         class="ml-4 font-italic font-weight-regular"
                         v-text="todo.text"
                         @dblclick="changeTodoText"
-                        style="font-size: 16px"></div>
+                        style="font-size: 1rem"></div>
                     <v-text-field
                         v-else-if="changeLabel"
                         type="text"
@@ -43,29 +43,24 @@
 
 <script lang="ts">
 import {Component, Watch, Prop, Emit, Vue} from 'vue-property-decorator'
-
-interface Todo{
-    id: number,
-    text: string,
-    checked: boolean
-}
+import {ITodo as Todo} from "@/types/type";
 
 @Component
 export default class TodoListItem extends Vue{
     // props
-    @Prop(Object) todo!: Todo
-    @Prop(Array) todos!: Array<Todo>
+    @Prop(Object) readonly todo!: Todo
+    @Prop(Array) readonly todos!: Todo[]
 
     // data
     private changeLabel: boolean = false;
     private updateText: string = '';
 
     // methods
-    changeTodoText () {
+    changeTodoText (): void {
         this.changeLabel = true;
     }
     @Emit()
-    updateTodo () {
+    updateTodo (): Todo {
         this.changeLabel = false;
         return {...this.todo, text: this.updateText}
     }
@@ -73,7 +68,7 @@ export default class TodoListItem extends Vue{
     // watch
     @Watch('todo.checked')
     @Emit('update-todo')
-    onTodoCheckedChanged(changeChecked: boolean) {
+    onTodoCheckedChanged(changeChecked: boolean): Todo {
         return {...this.todo, checked: changeChecked};
     }
 }
